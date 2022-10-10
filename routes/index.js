@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
     const currentTime = new Date();
     if (currentTime > req.session.user.tokenExpiry)
         return res.redirect('/refresh'); // the access token has expired
-    console.log(req.session.user)
+
     // get the user's top artists
     fetch('https://api.spotify.com/v1/me/top/tracks', {
         method: 'GET',
