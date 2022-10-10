@@ -24,7 +24,15 @@ router.get('/', (req, res, next) => {
     })
     .then(response => response.json())
     .then(json => {
-        res.render('index', { artists: json.items });
+        for (let item of json.items) {
+            let artist = item.artists[0].name;
+            for (let i = 1; i < item.artists.length; i++) {
+                artist += ", ";
+                artist += item.artists[i].name;
+            }
+            item.artist = artist;
+        }
+        res.render('index', { tracks: json.items });
     });
 });
 

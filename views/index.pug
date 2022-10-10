@@ -2,5 +2,21 @@ extends layout
 
 block content
     h1 Groove
-    each val in artists
-        p= val.artists[0].name + ' | ' + val.name
+    h2 Your top tracks in the medium term
+    .container
+        table.table 
+            thead 
+                tr
+                    th(scope='col') #
+                    th(scope='col') Artist
+                    th(scope='col') Track
+                    th(scope='col') Album
+                    th(scope='col') Length
+            tbody
+                each val, index in tracks
+                    tr
+                        td(scope='row')= index + 1
+                        td= val.artist
+                        td= val.name
+                        td= val.album.name
+                        td= Math.floor(Math.round(val.duration_ms / 1000) / 60) + ':' + (Math.round(val.duration_ms / 1000) % 60)
