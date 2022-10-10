@@ -4,6 +4,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const session = require('express-session');
 
 const { host, user, password, database } = require('./credentials.json').DATABASE;
 const index = require('./routes/index');
@@ -31,8 +32,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/stylesheets/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
-app.use('/javascripts/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/js'))
-app.use('/stylesheets/bootstrap-icons', express.static(__dirname + '/node_modules/bootstrap-icons/font'))
+app.use('/javascripts/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
+app.use('/stylesheets/bootstrap-icons', express.static(__dirname + '/node_modules/bootstrap-icons/font'));
+app.use(session({
+    secret: 'secret'
+}));
 
 app.use('/', index);
 app.use('/users', users);
