@@ -11,6 +11,9 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 
 const app = express();
+
+// we're going to need this later but i'll disable it for now
+/*
 const connection = mysql.createConnection({
     host: host,
     user: user,
@@ -21,6 +24,7 @@ const connection = mysql.createConnection({
 connection.connect(err => {
     if (err) console.log(err);
 });
+*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
