@@ -63,4 +63,24 @@ router.get('/callback', (req, res, next) => {
     });
 });
 
+router.get('/refresh', (req, res, next) => {
+    const params = new URLSearchParams();
+    params.append('grant_type', 'refresh_token');
+    params.append('refresh_token', req.session.user.refreshToken);
+    fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Basic ' + Buffer.from(client_id + ':' + client_secret).toString('base64'),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params
+    })
+    .then(response => response.json())
+    .then(json => {
+        req.session.user.accessToken = json.access_token;
+        req.session.user.tokenExpiry = Date.now() + (json.expires_in * 1000);
+        res.redirect('/');
+    });
+});
+
 module.exports = router;
