@@ -17,6 +17,7 @@ const app = express();
 const connection = mysql.createConnection({
     host: host,
     user: user,
+    email: email,
     password: password,
     database: database
 });
@@ -64,3 +65,40 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+
+//this part i added, not sure if i am doing the right thing though
+
+app.get('/', function(request, response) {
+	// Render login template
+	response.sendFile(path.join(__dirname + '/WebApp.html'));
+});
+
+app.post('/reg', function(request, response) {
+	// Capture the input fields
+	let user = request.body.username-reg;
+	let password = request.body.username-reg;
+    let email = request.body.email-reg;
+	// Ensure the input fields exists and are not empty
+	if (username && password) {
+		// Execute SQL query that'll select the account from the database based on the specified username and password
+		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [user, password], function(error, results, fields) {
+			// If there is an issue with the query, output the error
+			if (error) throw error;
+			// If the account exists
+			if (results.length > 0) {
+				// Authenticate the user
+				request.session.loggedin = true;
+				request.session.user = user;
+				// Redirect to home page
+				response.redirect('/home');
+			} else {
+				response.send('Successfully registered!');
+			}			
+			response.end();
+		});
+	} else {
+		response.send('Please enter Spotify Username, Email and Password!');
+		response.end();
+	}
+});
