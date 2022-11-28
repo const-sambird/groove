@@ -24,5 +24,10 @@ h1 {
     font-weight: bold;
 }
 
+label {
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 45px;
+    color:#000;
+}
 
 
