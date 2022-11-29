@@ -5,6 +5,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const session = require('express-session');
+const dotenv = require('dotenv');
+
+dotenv.config({ path: './.env'});
 
 const { host, user, password, database } = require('./credentials.json').DATABASE;
 const index = require('./routes/index');
@@ -12,20 +15,24 @@ const users = require('./routes/users');
 
 const app = express();
 
+app.get('/', function(request, response) {
+	// Render login template
+	response.sendFile(path.join(__dirname + '/Landing.html'));
+});
+
 // we're going to need this later but i'll disable it for now
 
 const connection = mysql.createConnection({
-    host: host,
-    user: user,
-    email: email,
-    password: password,
-    database: database
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    email: process.env.DATABASE_EMAIL,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE 
 });
 
 connection.connect(err => {
     if (err) console.log(err);
 });
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -67,23 +74,17 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 
-//this part i added, not sure if i am doing the right thing though
 
-app.get('/', function(request, response) {
-	// Render login template
-	response.sendFile(path.join(__dirname + '/WebApp.html'));
-});
 
-/*
-app.post('/reg', function(request, response) {
+app.post('/register', function(request, response) {
 	// Capture the input fields
 	let user = request.body.username-reg;
-	let password = request.body.username-reg;
+	let password = request.body.pwd-reg;
     let email = request.body.email-reg;
 	// Ensure the input fields exists and are not empty
-	if (username && password) {
+	if (user && password && email) {
 		// Execute SQL query that'll select the account from the database based on the specified username and password
-		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [user, password], function(error, results, fields) {
+		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ? AND email = ?', [user, email, password], function(error, results, fields) {
 			// If there is an issue with the query, output the error
 			if (error) throw error;
 			// If the account exists
@@ -103,11 +104,9 @@ app.post('/reg', function(request, response) {
 		response.end();
 	}
 });
-*/
 
 
-	
-app.post('/auth', function(request, response) {
+app.post('/login', function(request, response) {
 	// Capture the input fields
 	let username = request.body.username;
 	let password = request.body.password;
@@ -134,5 +133,9 @@ app.post('/auth', function(request, response) {
 		response.end();
 	}
 });
+
+
+	
+
 
 
