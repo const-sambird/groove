@@ -90,11 +90,15 @@ app.post('/register', function(request, response) {
 			if (error) throw error;
 			// If the account exists
 			if (results.length > 0) {
-				// Authenticate the user
+				/*// Authenticate the user
 				request.session.loggedin = true;
 				request.session.user = user;
 				// Redirect to home page
 				response.redirect('/Location.html');
+				*/
+				return response.render('register', {
+					message: 'The email is already registered. Try logging in!'
+				})
 			} else {
 				response.send('Successfully registered!');
 			}			
@@ -104,7 +108,7 @@ app.post('/register', function(request, response) {
 		response.send('Please enter Spotify Username, Email and Password!');
 		response.end();
 	}
-});
+  });
 
 
 app.post('/login', function(request, response) {
