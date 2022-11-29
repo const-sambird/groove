@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const session = require('express-session');
 const dotenv = require('dotenv');
+const bcrypt = require('bcrypt');
 
 dotenv.config({ path: './.env'});
 
