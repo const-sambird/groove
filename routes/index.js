@@ -3,21 +3,12 @@ const fetch = require('node-fetch');
 const { URLSearchParams } = require('url');
 const router = express.Router();
 
-
-router.get('/', function(req, res, next) {
-    res.render('index', )
-})
-
-
-
-
-
 const { client_id, client_secret, scopes } = require('../credentials.json').SPOTIFY;
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
     if (!req.session.user)
-        return res.redirect('/Landing'); // the user isn't logged in
+        return res.redirect('/Landing.html'); // the user isn't logged in
     
     const currentTime = new Date();
     if (currentTime > req.session.user.tokenExpiry)

@@ -10,14 +10,8 @@ const bcrypt = require('bcryptjs');
 const { host, user, password, database } = require('./credentials.json').DATABASE;
 const index = require('./routes/index');
 const users = require('./routes/users');
-const { builtinModules } = require('module');
 
-const app = express.Router();
-
-app.get('/', function(request, response) {
-	// Render login template
-	response.sendFile(path.join(__dirname + './views/Landing'));
-});
+const app = express();
 
 // we're going to need this later but i'll disable it for now
 
@@ -47,6 +41,7 @@ app.use(express.static(path.join(__dirname, './public')));
 app.use('/stylesheets/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use('/javascripts/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 app.use('/stylesheets/bootstrap-icons', express.static(__dirname + '/node_modules/bootstrap-icons/font'));
+app.use(express.static(path.join(__dirname, './views'))); // refactor before release
 app.use(session({
     secret: 'secret',
 	resave: true,
