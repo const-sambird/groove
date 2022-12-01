@@ -7,5 +7,108 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link rel="stylesheet" href="./Landing.css">
+    <style>
+        .body {
+            color: #000;
+            overflow-x: hidden;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            background-image: url("Base background.jpg");
+            background-size: 100%;
+        }
+        .h1 {
+            color: black;
+            text-align: center;
+            font-family: "Lucida Console", "Courier New", monospace;
+            font-size: 70px;
+            font-weight: bold;
+        }
+        .button {
+            border: none;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            margin: 4px 2px;
+            cursor: pointer;
+            background-color: rosybrown;    
+        }
+        .select {
+            border:none;
+            padding: 15px 45px;
+            border-radius: 5PX;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 20px;
+            overflow-y: auto;
+        }
+        .box{
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+    </style>
 </head>
+
+<body>
+    <div class="container">
+        <h1>Welcome!</h1>
+        <div class="box"> 
+            Please choose the location you want
+        </div>
+        <form action="#">
+        <select name="city" id="city">
+            <option value="Select">Select</option>
+            <option value="Phoenix, AZ">Phoenix, AZ</option>
+            <option value="Tucson, AZ">Tucson, AZ</option>
+            <option value="Little Rock, AR">Little Rock, AR</option>
+            <option value="Los Angeles, CA">Los Angeles, CA</option>
+            <option value="San Francisco, CA">San Francisco, CA</option>
+            <option value="Denver, CO">Denver, CO</option>
+            <option value="Bridgeport, CT">Bridgeport, CT</option>
+            <option value="New Haven, CT">New Haven, CT</option>
+            <option value="Washington, D.C">Washington, D.C</option>
+            <option value="Miami, FL">Miami, FL</option>
+            <option value="Atlanta, GA">Atlanta, GA</option>
+            <option value="Boise, ID">Boise City, ID</option>
+            <option value="Chicago, IL">Chicago, IL</option>
+            <option value="Indianapolis, IN">Indianapolis, IN</option>
+            <option value="Des Moines, IA">Des Moines, IA</option>
+            <option value="Wichita, KS">Wichita, KS</option>
+            <option value="New Orleans, LA">New Orleans, LA</option>
+            <option value="Baltimore, MD">Baltimore, MD</option>
+            <option value="Boston, MA">Boston, MA</option>
+            <option value="Detroit, MI">Detroit, MI</option>
+            <option value="Minneapolis, MN">Minneapolis, MN</option>
+            <option value="Jackson, MS">Jackson, MS</option>
+            <option value="Las Vegas, NV">Las Vegas, NV</option>
+            <option value="New York, NY">New York, NY</option>
+            <option value="Charlotte, NC">Charlotte, NC</option>
+            <option value="Columbus, OH">Columbus, OH</option>
+            <option value="Oklahoma City, OK">Oklahoma City, OK</option>
+            <option value="Portland, OR">Portland, OR</option>
+            <option value="Philadelphia, PA">Philadelphia, PA</option>
+            <option value="Memphis, TN">Memphis, TN</option>
+            <option value="Austin, TX">Austin, TX</option>
+            <option value="Dallas, TX">Dallas, TX</option>
+            <option value="Houston, TX">Houston, TX</option>
+            <option value="Salt Lake City, UT">Salt Lake City, UT</option>
+            <option value="Richmond, VA">Richmond, VA</option>
+            <option value="Seattle, WA">Seattle, WA</option>
+            <option value="Milwaukee, WI">Milwaukee, WI</option>        
+        </select>
+        <br>
+        <button class="button search">Search</button>
+        </form>
+    </div>
+    <script>
+
+    </script>
+</body>
+</html>
+
+
+
+
 
