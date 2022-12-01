@@ -1,29 +1,40 @@
 var express = require('express');
 var router = express.Router();
+const mysql = require('mysql');
 
+const connection = mysql.createConnection({
+  host: 'localhost',
+  database: 'database',
+  user: 'root',
+  email: 'test',
+  password: ''
+});
 
-
+connection.connect(err => {
+  if (err) console.log(err);
+});
 
 /* GET users listing. */
 router.get('/', function(req, res) {
-  res.render('Landing');
+  res.render('landing');
 });
 
+/*
 router.get('/login', function(req, res) {
   res.render('login');
 });
-
+*/
 
 
 router.post('/register', function(request, response) {
 	// Capture the input fields
 	let user = request.body.username-reg;
 	let password = request.body.pwd-reg;
-    let email = request.body.email-reg;
+  let email = request.body.email-reg;
 	// Ensure the input fields exists and are not empty
 	if (user && password && email) {
 		// Execute SQL query that'll select the account from the database based on the specified username and password
-		database.query('SELECT username FROM accounts WHERE username = ?', [user], async(error, results) {
+		connection.query('SELECT username FROM accounts WHERE username = ?', [user], async(error, results) =>{
 			// If there is an issue with the query, output the error
 			if (error) throw error;
 			// If the account exists
@@ -36,10 +47,8 @@ router.post('/register', function(request, response) {
 
 				response.send('Successfully registered!');
 			}			
-			
-			let hashedPassword = await bcrypt.hash(password, 8);
 
-			connection.query('INSERT INTO accounts SET ?', {user: user, email: email, password: hashedPassword}, (error, results) => {
+			connection.query('INSERT INTO accounts SET ?', {user: user, email: email, password: password}, (error, results) => {
 				if (error) {
 					console.log(error);
 				}
