@@ -12,7 +12,7 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 const { builtinModules } = require('module');
 
-const app = express();
+const app = express.Router();
 
 app.get('/', function(request, response) {
 	// Render login template
