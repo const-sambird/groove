@@ -16,7 +16,7 @@ const app = express();
 
 app.get('/', function(request, response) {
 	// Render login template
-	response.sendFile(path.join(__dirname + '/Landing.html'));
+	response.sendFile(path.join(__dirname + './views/Landing'));
 });
 
 // we're going to need this later but i'll disable it for now
