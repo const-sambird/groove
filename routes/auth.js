@@ -23,11 +23,10 @@ router.post('/register', function(request, response) {
                 message: 'The email is already in use. Simply log in!'
             });
         }
-    
 
         database.query('INSERT INTO accounts SET ?', {user: user, email: email_add, password: password}, (error, results) => {
             console.log(results);
-            return response.render('/Location');
+            return response.render('lLocation');
         });
     })
 });
