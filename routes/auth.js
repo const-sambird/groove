@@ -1,14 +1,5 @@
 const express = require('express');
-const mysql = require('mysql');
-
-const connection = mysql.createConnection({
-    host: 'localhost',
-	database: 'database',
-    user: 'root',
-    email: 'test',
-    password: ''
-});
-
+const database = require('../database');
 const router = express.Router();
 
 router.post('/register', function(request, response) {
@@ -19,7 +10,7 @@ router.post('/register', function(request, response) {
 	var password = request.body.pwd-reg;
     var email = request.body.email-reg;
 
-    connection.query('SELECT * FROM accounts WHERE email is ?', [email], (error, results) => {
+    database.query('SELECT email FROM accounts WHERE email is ?', [email], (error, results) => {
         if(error)
         {
            throw error;
@@ -32,7 +23,7 @@ router.post('/register', function(request, response) {
             })
         }
 
-        connection.query('INSERT INTO accounts SET ?', {user: user, email: email, password: password}, (error, results) => {
+        database.query('INSERT INTO accounts SET ?', {user: user, email: email, password: password}, (error, results) => {
             if(error)
             {
                 throw error;
