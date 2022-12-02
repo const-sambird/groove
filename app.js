@@ -8,8 +8,9 @@ const session = require('express-session');
 const bcrypt = require('bcryptjs');
 
 const { host, user, password, database } = require('./credentials.json').DATABASE;
-const index = require('./routes/index');
+const pages = require('./routes/pages');
 const users = require('./routes/users');
+const auth = require('./routes/auth');
 
 const app = express();
 
@@ -31,13 +32,14 @@ module.exports = connection;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, './public')));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use('/stylesheets/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use('/javascripts/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 app.use('/stylesheets/bootstrap-icons', express.static(__dirname + '/node_modules/bootstrap-icons/font'));
@@ -48,7 +50,8 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-app.use('/', index);
+app.use('/', pages);
+app.use('/auth', auth);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
@@ -68,6 +71,27 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
+
+/*
+app.get('/', (req, res) => {
+	res.render('landing');
+});
+
+app.get('/register', (req, res) => {
+	res.render('register');
+});
+
+app.get('/login', function(req, res) {
+	res.render('login');
+  });
+*/
+
+app.listen(5000, () => {
+	console.log("Server started on port 5000");
+})
+
+
 
 module.exports = app;
 

@@ -14,16 +14,10 @@ connection.connect(err => {
   if (err) console.log(err);
 });
 
-/* GET users listing. */
+/* GET users listing.*/ 
 router.get('/', function(req, res) {
   res.render('landing');
 });
-
-/*
-router.get('/login', function(req, res) {
-  res.render('login');
-});
-*/
 
 
 router.post('/register', function(request, response) {

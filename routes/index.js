@@ -5,10 +5,10 @@ const router = express.Router();
 
 const { client_id, client_secret, scopes } = require('../credentials.json').SPOTIFY;
 
-/* GET home page. */
+/* GET home page. */ 
 router.get('/', (req, res, next) => {
     if (!req.session.user)
-        return res.redirect('/Landing.html'); // the user isn't logged in
+        return res.redirect('/landing.html'); // the user isn't logged in
     
     const currentTime = new Date();
     if (currentTime > req.session.user.tokenExpiry)
@@ -35,9 +35,6 @@ router.get('/', (req, res, next) => {
         res.render('index', { tracks: json.items });
     });
 });
-
-
-
 
 router.get('/login', (req, res, next) => {
     const params = new URLSearchParams();

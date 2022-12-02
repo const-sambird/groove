@@ -13,10 +13,10 @@
     <div class="container">  
         <h1>Groove!</h1>
         <h2>Register here:</h2>  
-        <form action="/register" method="post">  
-            <div class="form-group"> <label for="username-reg">Spotify User Name</label> <input type="text" class="form-control" id="username-reg" placeholder="Enter username"> </div>
-            <div class="form-group"> <label for="email-reg">Spotify Email</label> <input type="email" class="form-control" id="email-reg" placeholder="Enter email"> </div>  
-            <div class="form-group"> <label for="pwd-reg">Password</label> <input type="password" class="form-control" id="pwd-reg" placeholder="Enter password"> </div>  
+        <form action="/auth/register" method="post">  
+            <div class="form-group"> <label for="username-reg">Spotify User Name</label> <input type="text" class="form-control" id="username-reg" placeholder="Enter username" name="user"> </div>
+            <div class="form-group"> <label for="email-reg">Spotify Email</label> <input type="email" class="form-control" id="email-reg" placeholder="Enter email" name="email"> </div>  
+            <div class="form-group"> <label for="pwd-reg">Password</label> <input type="password" class="form-control" id="pwd-reg" placeholder="Enter password" name="password"> </div>  
             <button type="register" value="register" class="btn btn-register" onclick="window.location.href='location.html'">Register</button> 
         </form>  
     </div>  
