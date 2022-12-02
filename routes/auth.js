@@ -3,14 +3,15 @@ const database = require('../database');
 const router = express.Router();
 
 router.post('/register', function(request, response) {
-	console.log(request.body);
+	//console.log(request.body);
     
     // Capture the input fields
-	var user = request.body.username-reg;
-	var password = request.body.pwd-reg;
-    var email = request.body.email-reg;
+	var user = request.body.user;
+    var email_add = request.body.email_add;
+	var password = request.body.password;
+   
 
-    database.query('SELECT email FROM accounts WHERE email is ?', [email], (error, results) => {
+    database.query('SELECT email FROM accounts WHERE email = "${email_add}" ', (error, results) => {
         if(error)
         {
            throw error;
@@ -20,22 +21,15 @@ router.post('/register', function(request, response) {
         {
             return response.render('/register', {
                 message: 'The email is already in use. Simply log in!'
-            })
+            });
         }
+    
 
-        database.query('INSERT INTO accounts SET ?', {user: user, email: email, password: password}, (error, results) => {
-            if(error)
-            {
-                throw error;
-            }
-            else 
-            {
-                return response.render('/location');
-            }
-        })
+        database.query('INSERT INTO accounts SET ?', {user: user, email: email_add, password: password}, (error, results) => {
+            console.log(results);
+            return response.render('/Location');
+        });
     })
 });
-
-
 
 module.exports = router;
