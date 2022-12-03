@@ -28,10 +28,19 @@ router.get('/', (req, res, next) => {
     .then(response => response.json())
     .then(json => {
         let genres = []
+        // spotify assigns genres to each artist
+        // so we'll just add all of the top artists' genres
+        // into one array
         for (let artist of json.items) {
             genres.push(...artist.genres);
         }
         let matchedGenres = [];
+        // ticketmaster has very broad genre information
+        // 'Pop', 'Rock', 'Country' etc, while spotify has
+        // incredibly specific ones (for instance, mine
+        // include 'indietronica', 'shiver pop', 'welsh indie')
+        // so we figure if there's some overlap between the words
+        // it's probably a match, so we'll add it to the array
         for (let ticketmasterGenre of Object.keys(GENRES)) {
             const regex = new RegExp(ticketmasterGenre, 'i');
             genres.forEach(genre => {
@@ -51,11 +60,15 @@ router.get('/', (req, res, next) => {
 
 router.post('/location', (req, res, next) => {
     if (!req.session.user) return res.redirect('/');
+    // store the city the user selected in the session info so we can pass it for geocoding later
     req.session.location = req.body.city;
     if (!req.session.user.token || req.session.user.token === 'none') return res.redirect('/doSpotifyLogin');
     res.redirect('/refresh');
 });
 
+// this is spotify's auth flow
+// i don't like it very much
+// but it's based on their guide
 router.get('/doSpotifyLogin', (req, res, next) => {
     const params = new URLSearchParams();
     params.append('response_type', 'code');

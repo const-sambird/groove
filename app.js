@@ -8,8 +8,6 @@ const session = require('express-session');
 const pages = require('./routes/pages');
 const index = require('./routes/index');
 const auth = require('./routes/auth');
-//const users = require('./routes/users');
-
 
 const app = express();
 
@@ -17,6 +15,9 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+// using the bootstrap css and also the addin to maintain session state
+// (which is where we will hold user information while we're working)
+// it will persist in the database however
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,6 +32,7 @@ app.use(session({
 	saveUninitialized: true
 }));
 
+// using pages to serve the static files and index to render the result
 app.use('/', index);
 app.use('/', pages);
 app.use('/auth', auth);

@@ -14,6 +14,8 @@ Make a copy of `credentials_example.json` named `credentials.json`. Three creden
 
 Fill in the relevant portions of the JSON file.
 
+Note regarding the Spotify application: **the callback URI must be set in the app settings**. Set this value to `http://localhost:5000/callback`.
+
 ## Creating a database
 
 Create a MySQL database server and make a new database called `groove`. We then add a table for the account information.
