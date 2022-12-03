@@ -70,35 +70,8 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
-
-/*
-app.get('/', (req, res) => {
-	res.render('landing');
-});
-
-app.get('/register', (req, res) => {
-	res.render('register');
-});
-
-app.get('/login', function(req, res) {
-	res.render('login');
-  });
-*/
-
 app.listen(5000, () => {
 	console.log("Server started on port 5000");
 })
 
-
-
 module.exports = app;
-
-
-
-
-
-
-	
-
-
-

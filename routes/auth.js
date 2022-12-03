@@ -23,7 +23,7 @@ router.post('/register', function(request, response) {
             return response.redirect('/register');
         }
 
-        database.query('INSERT INTO accounts SET ?', {user: user, password: password, spotifyToken: ""}, (error, results) => {
+        database.query('INSERT INTO accounts SET ?', {user: user, password: password, spotifyToken: "none"}, (error, results) => {
             console.log(results);
             request.session.user = {
                 name: user
@@ -38,7 +38,7 @@ router.post('/login', function(request, response) {
 	var user = request.body.user;
 	var password = request.body.password;
     
-    database.query('SELECT user, password FROM accounts WHERE user = ?', user, (error, results) => {
+    database.query('SELECT user, password, spotifyToken FROM accounts WHERE user = ?', user, (error, results) => {
         if(error)
         {
             throw error;
@@ -51,7 +51,8 @@ router.post('/login', function(request, response) {
                 if(results[count].password == password)
                 {
                     request.session.user = {
-                        name: user
+                        name: results[count].user,
+                        token: results[count].spotifyToken
                     }
                     return response.redirect('/location');
                 }

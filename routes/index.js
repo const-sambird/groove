@@ -35,6 +35,13 @@ router.get('/', (req, res, next) => {
     });
 });
 
+router.post('/location', (req, res, next) => {
+    if (!req.session.user) return res.redirect('/');
+    req.session.location = req.body.city;
+    if (!req.session.user.token || req.session.user.token === 'none') return res.redirect('/doSpotifyLogin');
+    res.redirect('/refresh');
+});
+
 router.get('/doSpotifyLogin', (req, res, next) => {
     const params = new URLSearchParams();
     params.append('response_type', 'code');
@@ -60,9 +67,11 @@ router.get('/callback', (req, res, next) => {
     })
     .then(response => response.json())
     .then(json => {
+        let name = req.session.user.name;
         req.session.user = {
+            name: name,
             accessToken: json.access_token,
-            refreshToken: json.refresh_token,
+            token: json.refresh_token,
             scope: json.scope,
             tokenExpiry: Date.now() + (json.expires_in * 1000) // seconds to milliseconds
         };
@@ -71,8 +80,8 @@ router.get('/callback', (req, res, next) => {
 });
 
 router.get('/doneSpotifyLogin', (req, res, next) => {
-    database.query('UPDATE accounts SET spotifyToken = ? WHERE user = ?', [req.session.user.refreshToken, req.session.user.name], (error, results) => {
-        if (error) res.render('error', {message: 'query to update refresh token errored', error: error});
+    database.query('UPDATE accounts SET spotifyToken = ? WHERE user = ?', [req.session.user.token, req.session.user.name], (error, results) => {
+        if (error) return res.render('error', {message: 'query to update refresh token errored', error: error});
         res.redirect('/');
     })
 });
@@ -80,7 +89,7 @@ router.get('/doneSpotifyLogin', (req, res, next) => {
 router.get('/refresh', (req, res, next) => {
     const params = new URLSearchParams();
     params.append('grant_type', 'refresh_token');
-    params.append('refresh_token', req.session.user.refreshToken);
+    params.append('refresh_token', req.session.user.token);
     fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         headers: {
@@ -91,6 +100,7 @@ router.get('/refresh', (req, res, next) => {
     })
     .then(response => response.json())
     .then(json => {
+        if (json.refresh_token) req.session.user.token = json.refresh_token;
         req.session.user.accessToken = json.access_token;
         req.session.user.tokenExpiry = Date.now() + (json.expires_in * 1000);
         res.redirect('/');
