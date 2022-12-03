@@ -1,5 +1,4 @@
 const fetch = require('node-fetch');
-const { URLSearchParams } = require('url');
 const TICKETMASTER_KEY = require('../credentials.json').TICKETMASTER.KEY;
 const MAPBOX_KEY = require('../credentials.json').MAPBOX.KEY;
 
