@@ -1,20 +1,59 @@
-extends layout
+doctype html
+html
+    head
+        title Groove
+        link(rel='stylesheet', href='/WebApp.css')
+        link(rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png')
+        link(rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png')
+        link(rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png')
+        link(rel='manifest' href='/site.webmanifest')
+        style(type='text/css').
+            .body {
+                color: #000;
+                overflow-x: hidden;
+                height: 100%;
+                background-repeat: no-repeat;
+                background-color: transparent;
+                background-image: url("Base background.jpg");
+                background-size: 100%;
+            }
+            .h1 {
+                color: black;
+                text-align: center;
+                font-family: "Lucida Console", "Courier New", monospace;
+                font-size: 45px;
+                font-weight: bold;
+            }
+            .h2{
+                color: black;
+                text-align: center;
+                font-family: "Lucida Console", "Courier New", monospace;
+                font-size: 25px;
+            }
+            .tr{
+                font-weight: bold;
+                font-size:18px;
+                font-family: "Lucida Console", "Courier New", monospace;
+            }
+    body
+        .content
+            h1 Groove
+            .container
+                table.table 
+                    thead 
+                        tr
+                            th(scope='col') #
+                            th(scope='col') Name
+                            th(scope='col') Date
+                            th(scope='col') Location
+                    tbody
+                        each val, index in events
+                            tr
+                                td(scope='row')= index + 1
+                                td= val.name
+                                td= val.dates.start.localDate
+                                td= val._embedded.venues[0].name
+        link(rel='stylesheet', href='/stylesheets/bootstrap/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/bootstrap-icons/bootstrap-icons.css')
+        script(src='/javascripts/bootstrap/bootstrap.bundle.min.js')
 
-block content
-    h1 Groove
-    h2 Recommended for you
-    .container
-        table.table 
-            thead 
-                tr
-                    th(scope='col') #
-                    th(scope='col') Name
-                    th(scope='col') Date
-                    th(scope='col') Location
-            tbody
-                each val, index in events
-                    tr
-                        td(scope='row')= index + 1
-                        td= val.name
-                        td= val.dates.start.localDate
-                        td= val._embedded.venues[0].name

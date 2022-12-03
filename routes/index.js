@@ -48,7 +48,6 @@ router.get('/', (req, res, next) => {
             })
         }
         getLatLon(req.session.location, coordinates => {
-            console.log(req.session)
             if (!coordinates) return res.render('noResults', { reason: 'The provided city didn\'t match one we recognise' });
             getEvents(coordinates[1], coordinates[0], 25, matchedGenres, results => {
                 if (!results) return res.render('noResults', { reason: 'There\'s no events we recommend for you in the given city' });
