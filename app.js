@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 
-const { host, user, password, database } = require('./credentials.json').DATABASE;
 const pages = require('./routes/pages');
 const index = require('./routes/index');
 const auth = require('./routes/auth');
