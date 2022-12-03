@@ -3,30 +3,16 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-//const mysql = require('mysql');
 const session = require('express-session');
 
 const { host, user, password, database } = require('./credentials.json').DATABASE;
 const pages = require('./routes/pages');
 const index = require('./routes/index');
 const auth = require('./routes/auth');
+//const users = require('./routes/users');
+
 
 const app = express();
-
-// we're going to need this later but i'll disable it for now
-/*
-const connection = mysql.createConnection({
-    host: 'localhost',
-	database: 'database',
-    user: 'root',
-    email: 'test',
-    password: ''
-});
-
-connection.connect( (err) => {
-    if (err) console.log(err);
-});
-*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
