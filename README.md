@@ -36,3 +36,11 @@ $ npm start
 ```
 
 The app runs on http://localhost:5000/.
+
+# Open-Source Software Used
+
+* Node.js
+* Express
+* Bootstrap
+* MySQL
+* node-fetch
