@@ -32,3 +32,5 @@ Assuming node and npm are installed, Groove can be started with
 $ npm install
 $ npm start
 ```
+
+The app runs on http://localhost:5000/.

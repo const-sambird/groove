@@ -25,7 +25,6 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use('/stylesheets/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use('/javascripts/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 app.use('/stylesheets/bootstrap-icons', express.static(__dirname + '/node_modules/bootstrap-icons/font'));
-app.use(express.static(path.join(__dirname, './views'))); // refactor before release
 app.use(session({
     secret: 'secret',
 	resave: true,
