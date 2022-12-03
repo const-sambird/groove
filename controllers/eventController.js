@@ -43,7 +43,7 @@ function getLatLon(location, callback) {
 
 function getEvents(latitude, longitude, radius, genres, callback) {
     const genreString = !genres ? "" : genres.join();
-    fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTER_KEY}&latlong=${latitude},${longitude}&radius=${radius}&classificationName=music`, {
+    fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTER_KEY}&latlong=${latitude},${longitude}&radius=${radius}&genreId=${genreString}&classificationName=music`, {
         method: 'GET'
     })
     .then(response => response.json())

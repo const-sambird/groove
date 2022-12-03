@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 //const mysql = require('mysql');
 const session = require('express-session');
-const bcrypt = require('bcryptjs');
 
 const { host, user, password, database } = require('./credentials.json').DATABASE;
 const pages = require('./routes/pages');
@@ -31,8 +30,7 @@ connection.connect( (err) => {
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -49,6 +47,7 @@ app.use(session({
 	saveUninitialized: true
 }));
 
+app.use('/', require('./routes/index'))
 app.use('/', pages);
 app.use('/auth', auth);
 app.use('/users', users);

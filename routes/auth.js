@@ -1,5 +1,6 @@
 const express = require('express');
 const app = require('../app');
+const path = require('path');
 const database = require('../database');
 const router = express.Router();
 
@@ -19,14 +20,15 @@ router.post('/register', function(request, response) {
 
         if(results.length > 0)
         {
-            return response.render('register', {
-                message: 'The email is already in use. Simply log in!'
-            });
+            return response.sendFile('/../views/register.html');
         }
 
-        database.query('INSERT INTO accounts SET ?', {user: user, password: password}, (error, results) => {
+        database.query('INSERT INTO accounts SET ?', {user: user, password: password, spotifyToken: ""}, (error, results) => {
             console.log(results);
-            return response.render('location');
+            request.session.user = {
+                name: user
+            };
+            return response.sendFile('/../views/location.html');
         });
     })
 });
@@ -48,21 +50,20 @@ router.post('/login', function(request, response) {
             {
                 if(results[count].password == password)
                 {
-                    return response.render('location');
+                    request.session.user = {
+                        name: user
+                    }
+                    return response.sendFile('/../views/location.html');
                 }
                 else
                 {
-                    return response.render('login', {
-                        message: 'Incorrect password!'
-                    });
+                    return response.sendFile('/../views/login.html');
                 }
             }
         }
         else
         {
-            return response.render('login', {
-                message: 'Incorrect email, sorry!'
-            });
+            return response.sendFile('/../views/login.html');
         }
         response.end();
     })
