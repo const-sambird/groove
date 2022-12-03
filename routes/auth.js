@@ -38,7 +38,7 @@ router.post('/login', function(request, response) {
 	var user = request.body.user;
 	var password = request.body.password;
     
-    database.query('SELECT user FROM accounts WHERE user = "${user}" ', (error, results) => {
+    database.query('SELECT user, password FROM accounts WHERE user = ?', user, (error, results) => {
         if(error)
         {
             throw error;
