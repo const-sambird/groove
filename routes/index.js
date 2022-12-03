@@ -4,6 +4,7 @@ const { URLSearchParams } = require('url');
 const database = require('../database');
 const router = express.Router();
 const path = require('path');
+const { GENRES, getLatLon, getEvents } = require('../controllers/eventController');
 
 const { client_id, client_secret, scopes } = require('../credentials.json').SPOTIFY;
 
@@ -30,8 +31,21 @@ router.get('/', (req, res, next) => {
         for (let artist of json.items) {
             genres.push(...artist.genres);
         }
-        console.log(genres);
-        res.send(200)
+        let matchedGenres = [];
+        for (let ticketmasterGenre of Object.keys(GENRES)) {
+            const regex = new RegExp(ticketmasterGenre, 'i');
+            genres.forEach(genre => {
+                if (regex.test(genre)) matchedGenres.push(GENRES[ticketmasterGenre]);
+            })
+        }
+        getLatLon(req.session.location, coordinates => {
+            console.log(req.session)
+            if (!coordinates) return res.render('noResults', { reason: 'The provided city didn\'t match one we recognise' });
+            getEvents(coordinates[1], coordinates[0], 25, matchedGenres, results => {
+                if (!results) return res.render('noResults', { reason: 'There\'s no events we recommend for you in the given city' });
+                return res.render('results', { events: results });
+            });
+        })
     });
 });
 

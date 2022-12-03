@@ -8,7 +8,7 @@ const session = require('express-session');
 
 const { host, user, password, database } = require('./credentials.json').DATABASE;
 const pages = require('./routes/pages');
-const users = require('./routes/users');
+const index = require('./routes/index');
 const auth = require('./routes/auth');
 
 const app = express();
@@ -47,10 +47,9 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-app.use('/', require('./routes/index'))
+app.use('/', index);
 app.use('/', pages);
 app.use('/auth', auth);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

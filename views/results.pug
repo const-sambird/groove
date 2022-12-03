@@ -1,0 +1,20 @@
+extends layout
+
+block content
+    h1 Groove
+    h2 Recommended for you
+    .container
+        table.table 
+            thead 
+                tr
+                    th(scope='col') #
+                    th(scope='col') Name
+                    th(scope='col') Date
+                    th(scope='col') Location
+            tbody
+                each val, index in events
+                    tr
+                        td(scope='row')= index + 1
+                        td= val.name
+                        td= val.dates.start.localDate
+                        td= val._embedded.venues[0].name
