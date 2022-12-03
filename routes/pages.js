@@ -15,7 +15,7 @@ router.get('/login', function(req, res) {
   });
 
 router.get('/location', function(req, res) {
-    res.render('/location');
+    res.render('location');
 })  
 
   module.exports = router;
