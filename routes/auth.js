@@ -20,7 +20,7 @@ router.post('/register', function(request, response) {
 
         if(results.length > 0)
         {
-            return response.sendFile('/../views/register.html');
+            return response.redirect('/register');
         }
 
         database.query('INSERT INTO accounts SET ?', {user: user, password: password, spotifyToken: ""}, (error, results) => {
@@ -28,7 +28,7 @@ router.post('/register', function(request, response) {
             request.session.user = {
                 name: user
             };
-            return response.sendFile('/../views/location.html');
+            return response.redirect('/location');
         });
     })
 });
@@ -53,17 +53,17 @@ router.post('/login', function(request, response) {
                     request.session.user = {
                         name: user
                     }
-                    return response.sendFile('/../views/location.html');
+                    return response.redirect('/location');
                 }
                 else
                 {
-                    return response.sendFile('/../views/login.html');
+                    return response.redirect('/login');
                 }
             }
         }
         else
         {
-            return response.sendFile('/../views/login.html');
+            return response.redirect('/login');
         }
         response.end();
     })
